@@ -9,11 +9,39 @@ import { MdDelete } from "react-icons/md";
 function Todo() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
+  const [editId,setEditId] = useState()
 
-  const addTodo = () => {
-    setTodos([...todos, { list: todo, id: Date.now(), status: false }]);
-    setTodo("");
-  };
+//   const addTodo = () => {
+//     if(todo !== ''){
+//     setTodos([...todos, { list: todo, id: Date.now(), status: false }]);
+//     setTodo("");
+//     }
+//     if(editId){
+//         const editTodo = todos.find((to)=>to.id===editId)
+//         const updateTodo = todos.map((todo)=>todo.id === editTodo.id 
+//         ? (todo = {id: todo.id , list : todo})
+//         : (todo = {id: todo.id , list : todo.list})
+//         )
+//         setTodos(updateTodo);
+//         setEditId(0);
+//         setTodo("");
+//     }
+//   };
+const addTodo = () => {
+  if (todo !== "") {
+    if (editId) {
+      const updatedTodos = todos.map((todoItem) =>
+        todoItem.id === editId ? { ...todoItem, list: todo } : todoItem
+      );
+      setTodos(updatedTodos);
+      setEditId(0);
+      setTodo("");
+    } else {
+      setTodos([...todos, { list: todo, id: Date.now(), status: false }]);
+      setTodo("");
+    }
+  }
+};
 
   const inputRef = useRef("null");
 
@@ -38,8 +66,9 @@ function Todo() {
   const onEdit = (id)=>{
     const editTodo = todos.find((todo)=>todo.id===id)
     setTodo(editTodo.list)
+    setEditId(editTodo.id)
   }
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
   return (
     <div className="container">
       <h2>TODO APP</h2>
@@ -52,7 +81,7 @@ function Todo() {
           className="form-control"
           onChange={(event) => setTodo(event.target.value)}
         />
-        <button onClick={addTodo}>ADD</button>
+        <button onClick={addTodo}>{editId ? 'EDIT' : 'ADD'}</button>
       </form>
       <div className="list">
         <ul>
