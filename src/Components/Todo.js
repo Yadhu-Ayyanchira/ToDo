@@ -11,24 +11,8 @@ function Todo() {
   const [todos, setTodos] = useState([]);
   const [editId,setEditId] = useState()
 
-//   const addTodo = () => {
-//     if(todo !== ''){
-//     setTodos([...todos, { list: todo, id: Date.now(), status: false }]);
-//     setTodo("");
-//     }
-//     if(editId){
-//         const editTodo = todos.find((to)=>to.id===editId)
-//         const updateTodo = todos.map((todo)=>todo.id === editTodo.id 
-//         ? (todo = {id: todo.id , list : todo})
-//         : (todo = {id: todo.id , list : todo.list})
-//         )
-//         setTodos(updateTodo);
-//         setEditId(0);
-//         setTodo("");
-//     }
-//   };
 const addTodo = () => {
-  if (todo !== "") {
+  if (todo.trim() !== "") {
     if (editId) {
       const updatedTodos = todos.map((todoItem) =>
         todoItem.id === editId ? { ...todoItem, list: todo } : todoItem
